@@ -29,9 +29,11 @@ namespace SequentialNumericUUID
             string ulongSegment = $"{timeStamp.ToString()}{current.Microsecond.ToString("D3")}{(current.Nanosecond / 100).ToString()}";
             string randomString = Random.Shared.Next(0, 9999).ToString();
             int recomendedRandomStringSliceLength = ULongDigitsCount - ulongSegment.Length;
-            recomendedRandomStringSliceLength = recomendedRandomStringSliceLength > randomString.Length ? randomString.Length : recomendedRandomStringSliceLength;
+            recomendedRandomStringSliceLength = recomendedRandomStringSliceLength > randomString.Length ? 
+                                                                                    randomString.Length : recomendedRandomStringSliceLength;
 
-            return ulong.Parse($"{ulongSegment}{randomString.Substring(0, recomendedRandomStringSliceLength).PadLeft(5 - recomendedRandomStringSliceLength, '0')}");
+            return ulong.Parse($"{ulongSegment}{randomString.Substring(0, recomendedRandomStringSliceLength)
+                                                            .PadLeft(5 - recomendedRandomStringSliceLength, '0')}");
         }
 
         public static DateTime GetUTCDateTime(ulong sequentialNumericUUID, bool isGeneratedWithRandomness = false)
